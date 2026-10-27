@@ -134,6 +134,13 @@ export default function SupportScreen() {
           <ContactTile icon="chatbubbles-outline" label={t('support.chatSupport')} onPress={openChat} loading={supportChat.isPending} />
         </View>
 
+        <Text variant="h3">{t('support.socialTitle')}</Text>
+        <View style={styles.contacts}>
+          <ContactTile icon="logo-instagram" label={t('support.instagram')} onPress={() => void openUrl(env.socialInstagram)} />
+          <ContactTile icon="logo-linkedin" label={t('support.linkedin')} onPress={() => void openUrl(env.socialLinkedIn)} />
+          <ContactTile icon="logo-facebook" label={t('support.facebook')} onPress={() => void openUrl(env.socialFacebook)} />
+        </View>
+
         <Text variant="h3">{t('support.faqTitle')}</Text>
         <View style={styles.faqList}>
           {FAQ.map((item) => (
