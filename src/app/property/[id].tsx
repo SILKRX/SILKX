@@ -105,6 +105,9 @@ function PropertyContent({ property }: { property: Property }) {
   const openGallery = (index: number) =>
     router.push({ pathname: '/gallery/[id]', params: { id: property.id, index: String(index), source: 'property' } });
 
+  const openTour = () => router.push({ pathname: '/tour/[id]', params: { id: property.id } });
+  const openAssistant = () => router.push({ pathname: '/assistant', params: { propertyId: property.id } });
+
   const call = async () => {
     analytics.track('call_tapped', { propertyId: property.id });
     api.properties.recordCall(property.id).catch(() => undefined);
@@ -154,6 +157,12 @@ function PropertyContent({ property }: { property: Property }) {
               analytics.track('gallery_swiped', { propertyId: property.id, index });
             }}
           />
+          <Pressable style={styles.tourPill} onPress={openTour} accessibilityRole="button" accessibilityLabel={t('tour.open')}>
+            <Icon name="cube-outline" size="sm" color={colors.textOnGold} />
+            <Text variant="buttonSm" style={{ color: colors.textOnGold }}>
+              {t('tour.title')}
+            </Text>
+          </Pressable>
           {property.images.length > 1 ? (
             <View style={styles.counter} pointerEvents="none">
               <Icon name="images-outline" size="xs" color={colors.white} />
@@ -199,6 +208,33 @@ function PropertyContent({ property }: { property: Property }) {
 
           <View style={styles.block}>
             <SpecsGrid property={property} />
+          </View>
+
+          <View style={[styles.block, styles.featureRow]}>
+            <Pressable style={styles.featureCard} onPress={openTour} accessibilityRole="button">
+              <View style={styles.featureIcon}>
+                <Icon name="cube-outline" size="lg" color={colors.gold} />
+              </View>
+              <Text variant="bodyStrong">{t('tour.sectionTitle')}</Text>
+              <Text variant="caption" color="secondary">
+                {t('tour.sectionText')}
+              </Text>
+              <Text variant="buttonSm" color="gold">
+                {t('tour.open')} →
+              </Text>
+            </Pressable>
+            <Pressable style={styles.featureCard} onPress={openAssistant} accessibilityRole="button">
+              <View style={styles.featureIcon}>
+                <Icon name="sparkles" size="lg" color={colors.gold} />
+              </View>
+              <Text variant="bodyStrong">{t('assistant.title')}</Text>
+              <Text variant="caption" color="secondary">
+                {t('assistant.cardText')}
+              </Text>
+              <Text variant="buttonSm" color="gold">
+                {t('assistant.ask')} →
+              </Text>
+            </Pressable>
           </View>
 
           {property.complexId ? (
@@ -370,6 +406,40 @@ const useStyles = makeStyles((t) => ({
     paddingVertical: spacing.xs,
     borderRadius: radii.pill,
     backgroundColor: t.colors.glassOnImage,
+  },
+  tourPill: {
+    position: 'absolute',
+    left: spacing.lg,
+    bottom: radii.xxl + spacing.md,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs + spacing.xxs,
+    borderRadius: radii.pill,
+    backgroundColor: t.colors.gold,
+  },
+  featureRow: {
+    flexDirection: 'row',
+    gap: spacing.md,
+  },
+  featureCard: {
+    flex: 1,
+    gap: spacing.xs,
+    padding: spacing.md,
+    borderRadius: radii.lg,
+    borderWidth: sizes.border,
+    borderColor: t.colors.goldBorder,
+    backgroundColor: t.colors.goldSoft,
+  },
+  featureIcon: {
+    width: sizes.iconButton.md,
+    height: sizes.iconButton.md,
+    borderRadius: radii.md,
+    backgroundColor: t.colors.surface,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: spacing.xs,
   },
   sheet: {
     marginTop: -radii.xxl,

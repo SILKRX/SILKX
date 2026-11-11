@@ -295,6 +295,56 @@ export interface FaqItem {
   answer: string;
 }
 
+// ---------- Отели (раздел «Гостям Ташкента») ----------
+
+export type HotelAmenity = 'wifi' | 'breakfast' | 'parking' | 'pool' | 'gym' | 'spa' | 'airport' | 'restaurant';
+export type HotelRoomType = 'standard' | 'deluxe' | 'suite';
+
+export interface HotelRoom {
+  id: string;
+  type: HotelRoomType;
+  /** USD за ночь */
+  price: number;
+  maxGuests: number;
+  area: number;
+}
+
+export interface Hotel {
+  id: string;
+  name: string;
+  stars: 3 | 4 | 5;
+  rating: number;
+  reviewsCount: number;
+  district: DistrictId;
+  address: string;
+  coords: Coordinates;
+  /** Телефон ресепшена (E.164) */
+  phone: string;
+  images: string[];
+  amenities: HotelAmenity[];
+  rooms: HotelRoom[];
+  /** Минимальная цена за ночь, USD */
+  priceFrom: number;
+  checkInTime: string;
+  checkOutTime: string;
+}
+
+export interface HotelBookingInput {
+  hotelId: string;
+  /** «2026-11-20» */
+  checkIn: string;
+  checkOut: string;
+  guests: number;
+  name: string;
+  /** E.164 */
+  phone: string;
+}
+
+export interface HotelBookingRequest extends HotelBookingInput {
+  id: string;
+  createdAt: string;
+}
+
 export interface Page<T> {
   items: T[];
   total: number;

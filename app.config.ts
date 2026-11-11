@@ -24,8 +24,8 @@ const ENV_SUFFIX: Record<AppEnv, { id: string; name: string }> = {
 const BRAND_BACKGROUND = '#0B0C0F';
 const BRAND_GOLD = '#BCA37F';
 
-/** EAS project id появляется после `npx eas-cli@latest init`. Без него OTA-обновления выключены. */
-const EAS_PROJECT_ID = process.env.EAS_PROJECT_ID;
+/** EAS project id (@silkx/silkx). Можно переопределить через EAS_PROJECT_ID. */
+const EAS_PROJECT_ID = process.env.EAS_PROJECT_ID ?? 'b76db4d2-5715-424a-b666-eb0bed8aa4eb';
 
 const googleMapsKeys = {
   androidGoogleMapsApiKey: process.env.GOOGLE_MAPS_ANDROID_KEY,
@@ -109,8 +109,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     apiUrl: process.env.API_URL ?? 'https://api.silkx.uz',
     sentryDsn: process.env.SENTRY_DSN ?? '',
     analyticsKey: process.env.ANALYTICS_KEY ?? '',
-    supportPhone: '+998712000000',
-    supportTelegram: 'https://t.me/silkx_support',
-    ...(EAS_PROJECT_ID ? { eas: { projectId: EAS_PROJECT_ID } } : {}),
+    supportPhone: '+998970345665',
+    supportTelegram: 'https://t.me/SILKX07',
+    eas: { projectId: EAS_PROJECT_ID },
   },
 });

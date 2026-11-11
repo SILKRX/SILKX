@@ -127,6 +127,8 @@ export default function SupportScreen() {
         bottomOffset={spacing.xxl}
         showsVerticalScrollIndicator={false}
       >
+        <Button title={t('assistant.ask')} leftIcon="sparkles" variant="secondary" fullWidth onPress={() => router.push('/assistant')} />
+
         <Text variant="h3">{t('support.contactTitle')}</Text>
         <View style={styles.contacts}>
           <ContactTile icon="call-outline" label={t('support.callUs')} onPress={() => void call()} />

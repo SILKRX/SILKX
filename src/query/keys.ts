@@ -44,4 +44,8 @@ export const qk = {
   },
   geo: (query: string) => ['geo', query] as const,
   flags: ['flags'] as const,
+  hotels: {
+    list: (district: string | null) => ['hotels', 'list', district ?? 'all'] as const,
+    detail: (id: string) => ['hotels', 'detail', id] as const,
+  },
 };

@@ -5,9 +5,12 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import { en } from './locales/en';
+import { ko } from './locales/ko';
 import { ru } from './locales/ru';
+import { tr } from './locales/tr';
 import { uz } from './locales/uz';
-import { isLanguage, type Language } from './types';
+import { zh } from './locales/zh';
+import { isLanguage, type Language, SUPPORTED_LANGUAGES } from './types';
 
 export { isLanguage, type Language, SUPPORTED_LANGUAGES } from './types';
 
@@ -34,10 +37,13 @@ export function initI18n(language: Language): typeof i18n {
       ru: { translation: ru },
       uz: { translation: uz },
       en: { translation: en },
+      zh: { translation: zh },
+      ko: { translation: ko },
+      tr: { translation: tr },
     },
     lng: language,
     fallbackLng: 'ru',
-    supportedLngs: ['ru', 'uz', 'en'],
+    supportedLngs: [...SUPPORTED_LANGUAGES],
     interpolation: { escapeValue: false },
     returnNull: false,
     initAsync: false,
