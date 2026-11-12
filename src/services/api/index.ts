@@ -2,6 +2,7 @@ import { authApi } from './auth';
 import { adminApi, sellerApi } from './business';
 import { complexesApi, favoritesApi, geoApi, propertiesApi } from './catalog';
 import { chatApi, notificationsApi, viewingsApi } from './engagement';
+import { hotelsApi } from './hotels';
 import { aiApi, configApi, supportApi } from './misc';
 
 /** Единая точка входа в API приложения. */
@@ -9,6 +10,7 @@ export const api = {
   auth: authApi,
   properties: propertiesApi,
   complexes: complexesApi,
+  hotels: hotelsApi,
   favorites: favoritesApi,
   geo: geoApi,
   viewings: viewingsApi,

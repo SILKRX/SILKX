@@ -5,16 +5,17 @@ import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AnimatedHero } from '@/components/home/AnimatedHero';
-import { greetingKey, HeroSearchBar, HomeTopBar, QuickActions, WhySilkx } from '@/components/home/HomeParts';
+import { HeroSearchBar, HomeTopBar, QuickActions, WhySilkx } from '@/components/home/HomeParts';
+import { HotelCard, HotelCardSkeleton } from '@/components/hotels/HotelCard';
 import { ComplexCard, ComplexCardSkeleton } from '@/components/property/ComplexCard';
 import { PropertyCardCompact, PropertyCardSkeleton } from '@/components/property/PropertyCard';
 import { FeatureGate } from '@/components/system/AppSync';
 import { EmptyState, SectionHeader, SkeletonGroup, Text } from '@/components/ui';
 import { useComplexes, useHotProperties } from '@/hooks/api/catalog';
+import { useHotels } from '@/hooks/api/hotels';
 import { usePullToRefresh, useRefreshOnFocus } from '@/hooks/common';
-import { useSessionStore } from '@/store/session';
 import { layout, makeStyles, motion, opacity, radii, sizes, spacing, useTheme } from '@/theme';
-import type { Complex, Property } from '@/types/domain';
+import type { Complex, Hotel, Property } from '@/types/domain';
 
 export { RouteErrorBoundary as ErrorBoundary } from '@/components/system/ErrorBoundary';
 
@@ -43,16 +44,13 @@ export default function HomeScreen() {
     scrollY.set(event.contentOffset.y);
   });
 
-  const user = useSessionStore((s) => s.user);
   const hot = useHotProperties();
   const complexes = useComplexes();
   const premium = (complexes.data ?? []).filter((c) => c.class !== 'comfort');
+  const hotels = useHotels(null);
 
-  const { refreshing, onRefresh } = usePullToRefresh(() => Promise.all([hot.refetch(), complexes.refetch()]));
+  const { refreshing, onRefresh } = usePullToRefresh(() => Promise.all([hot.refetch(), complexes.refetch(), hotels.refetch()]));
   useRefreshOnFocus(hot.refetch);
-
-  const greeting = t(greetingKey());
-  const firstName = user?.name.split(' ')[0];
 
   return (
     <View style={styles.root}>
@@ -75,9 +73,6 @@ export default function HomeScreen() {
         <AnimatedHero height={heroHeight} scrollY={scrollY}>
           <View style={[styles.heroContent, { paddingTop: insets.top + sizes.header }]}>
             <View style={styles.heroTexts}>
-              <Text variant="overline" color="gold">
-                {firstName ? t('home.greetingName', { greeting, name: firstName }) : greeting}
-              </Text>
               <Text
                 variant="display"
                 color="white"
@@ -129,6 +124,39 @@ export default function HomeScreen() {
                 contentContainerStyle={styles.carousel}
               />
             </SkeletonGroup>
+          )}
+
+          {hotels.isError && !hotels.data ? null : (
+            <View style={styles.section}>
+              <SectionHeader
+                title={t('hotels.homeTitle')}
+                subtitle={t('hotels.homeSubtitle')}
+                actionLabel={t('hotels.allHotels')}
+                onAction={() => router.push('/hotels')}
+              />
+              <SkeletonGroup>
+                <FlatList<Hotel>
+                  horizontal
+                  data={hotels.data}
+                  keyExtractor={(item) => item.id}
+                  renderItem={({ item }) => <HotelCard hotel={item} width={cardWidth} />}
+                  ItemSeparatorComponent={Separator}
+                  ListEmptyComponent={
+                    hotels.isPending ? (
+                      <View style={styles.skeletonRow}>
+                        {SKELETON_ITEMS.map((i) => (
+                          <HotelCardSkeleton key={i} width={cardWidth} />
+                        ))}
+                      </View>
+                    ) : undefined
+                  }
+                  showsHorizontalScrollIndicator={false}
+                  snapToInterval={cardWidth + spacing.md}
+                  decelerationRate="fast"
+                  contentContainerStyle={styles.carousel}
+                />
+              </SkeletonGroup>
+            </View>
           )}
 
           <FeatureGate flag="developerShowcases">

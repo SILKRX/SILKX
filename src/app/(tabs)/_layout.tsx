@@ -24,6 +24,7 @@ export default function TabsLayout() {
     >
       <Tabs.Screen name="index" options={{ title: t('tabs.home') }} />
       <Tabs.Screen name="catalog" options={{ title: t('tabs.catalog') }} />
+      <Tabs.Screen name="hotels" options={{ title: t('tabs.hotels') }} />
       <Tabs.Screen name="favorites" options={{ title: t('tabs.favorites'), hidden: isAdmin }} />
       <Tabs.Screen name="manage" options={{ title: t('tabs.manage'), hidden: !isAdmin }} />
       <Tabs.Screen name="profile" options={{ title: t('tabs.profile') }} />

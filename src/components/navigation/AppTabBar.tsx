@@ -11,6 +11,7 @@ import { effects, makeStyles, motion, radii, sizes, spacing, typography, useThem
 const TAB_ICONS: Record<string, { active: IconName; inactive: IconName }> = {
   index: { active: 'home', inactive: 'home-outline' },
   catalog: { active: 'compass', inactive: 'compass-outline' },
+  hotels: { active: 'bed', inactive: 'bed-outline' },
   favorites: { active: 'heart', inactive: 'heart-outline' },
   manage: { active: 'shield-checkmark', inactive: 'shield-checkmark-outline' },
   profile: { active: 'person', inactive: 'person-outline' },

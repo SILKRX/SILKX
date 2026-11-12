@@ -52,6 +52,10 @@ function RootNavigator() {
       <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
       <Stack.Screen name="property/[id]" />
       <Stack.Screen name="gallery/[id]" options={{ presentation: 'fullScreenModal', animation: 'fade', gestureEnabled: false }} />
+      <Stack.Screen name="tour/[id]" options={{ presentation: 'fullScreenModal', animation: 'fade', gestureEnabled: false }} />
+      <Stack.Screen name="assistant" options={{ animation: 'slide_from_bottom' }} />
+      <Stack.Screen name="hotel/[id]" />
+      <Stack.Screen name="hotel-booking/[id]" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
       <Stack.Screen name="complex/[id]" />
       <Stack.Screen name="notifications" />
       <Stack.Screen name="settings" />

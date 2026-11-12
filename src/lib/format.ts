@@ -102,15 +102,15 @@ export function weekdayShort(date: Date, t: TFunction): string {
   return t(WEEKDAY_SHORT[date.getDay()] ?? WEEKDAY_SHORT[0]);
 }
 
-/** «17 октября» или «17 октября 2025», если год не текущий. */
+/** «17 октября» или «17 октября 2025», если год не текущий. Порядок задаёт локаль: в zh/ko — «10月17日». */
 export function formatDayMonth(date: Date, t: TFunction): string {
-  const base = `${date.getDate()} ${monthGenitive(date, t)}`;
-  return date.getFullYear() === new Date().getFullYear() ? base : `${base} ${date.getFullYear()}`;
+  const values = { day: date.getDate(), month: monthGenitive(date, t), year: date.getFullYear() };
+  return date.getFullYear() === new Date().getFullYear() ? t('calendar.dayMonth', values) : t('calendar.dayMonthYear', values);
 }
 
-/** «октябрь 2023» — для «на SILKX с …» */
+/** «окт 2023» — для «на SILKX с …» (в zh/ko — «2023年10月») */
 export function formatMonthYear(date: Date, t: TFunction): string {
-  return `${monthShort(date, t)} ${date.getFullYear()}`;
+  return t('calendar.monthYear', { month: monthShort(date, t), year: date.getFullYear() });
 }
 
 export function isSameDay(a: Date, b: Date): boolean {
