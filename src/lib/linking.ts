@@ -37,5 +37,11 @@ export function openInMaps(coords: Coordinates, label: string): Promise<boolean>
 }
 
 export function openUrl(url: string): Promise<boolean> {
+  // В вебе внешние ссылки — в новой вкладке: сессия живёт в памяти, и уход со страницы разлогинивает.
+  // С noopener window.open всегда возвращает null, поэтому результат не проверяем.
+  if (Platform.OS === 'web') {
+    window.open(url, '_blank', 'noopener,noreferrer');
+    return Promise.resolve(true);
+  }
   return openSafely(url, 'url');
 }

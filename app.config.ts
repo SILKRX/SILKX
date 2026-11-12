@@ -111,6 +111,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     analyticsKey: process.env.ANALYTICS_KEY ?? '',
     supportPhone: '+998970345665',
     supportTelegram: 'https://t.me/SILKX07',
+    socialInstagram: 'https://www.instagram.com/silkx_official',
+    socialLinkedIn: 'https://www.linkedin.com/company/silkxofficial',
+    socialFacebook: 'https://www.facebook.com/profile.php?id=61595846581408',
     eas: { projectId: EAS_PROJECT_ID },
   },
 });
